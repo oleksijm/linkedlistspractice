@@ -14,17 +14,34 @@ int main()
 		std::cin >> name;
 		if (name == "q")
 		{
+			cl1->printList();
 			break;
+			
 		}
 		cl1->insert(name);
 
 	}
-	cl1->printList();
+
+	while (true)
+	{
+		std::cout << "Enter the name of the contact to delete or q to quit." << std::endl;
+		std::cin >> name;
+		if (name == "q")
+		{
+			break;
+		}
+		cl1->deleteNode(name);
+		cl1->printList();
+
+	}
+	
 
 
 	return 0;
 }
 *****************************************************************************************************************************************************************
+//ContactList.cpp
+
 #include "ContactList.h"
 
 
@@ -104,6 +121,58 @@ void ContactList::insert(const std::string& name)
 	size++;
 
 }
+
+void ContactList::deleteNode(const std::string& name)
+{
+	//case 1 - empty list
+	if (head == 0)
+	{
+		std::cout << "Node cannot be deleted from an empty linked list!" << std::endl;
+	}
+	else
+	{
+		Contact* curr = head;
+		Contact* prev = 0;
+
+		//Traverse list to find node to delete
+		while (curr != 0)
+		{
+			if (curr->name == name)
+			{
+				break;
+			}
+			else
+			{
+				prev = curr;
+				curr = curr->next;
+			}
+		}
+	//case 2 - Node with "name" not found in list
+		if (curr == 0)
+		{
+			std::cout << "Contact with name " << name << " not found." << std::endl;
+		}
+		else
+		{
+	//case 3 - delete from the head node
+			if (head == curr)
+			{
+				head = head->next;
+			}
+
+	//case 4 - delete beyond head
+			else
+			{
+				prev->next = curr->next;
+			}
+
+			delete curr;
+			size--;
+		}
+
+	}
+
+}
 ***************************************************************************************************************************************************************
 //Contact.h
 
@@ -120,6 +189,7 @@ public:
 	void addToHead(const std::string&);
 	void printList();
 	void insert(const std::string&);
+	void deleteNode(const std::string&);
 
 
 private:
