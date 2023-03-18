@@ -14,13 +14,15 @@ int main()
 		std::cin >> name;
 		if (name == "q")
 		{
-			cl1->printList();
+			//cl1->printList();
 			break;
 			
 		}
 		cl1->insert(name);
 
 	}
+
+	cl1->reversePrintList();
 
 	while (true)
 	{
@@ -173,8 +175,27 @@ void ContactList::deleteNode(const std::string& name)
 	}
 
 }
+
+void ContactList::reversePrintList()
+{
+
+	reversePrintWorker(head);
+
+}
+
+void ContactList::reversePrintWorker(Contact* curr)
+{
+	if (curr != 0)
+	{
+		reversePrintWorker(curr->next);
+		std::cout << *curr << std::endl;
+	}
+
+
+
+}
 ***************************************************************************************************************************************************************
-//Contact.h
+//Contactlist.h
 
 #ifndef CONTACTLIST_H_
 #define CONTACTLIST_H_
@@ -190,9 +211,11 @@ public:
 	void printList();
 	void insert(const std::string&);
 	void deleteNode(const std::string&);
+	void reversePrintList();
 
 
 private:
+	void reversePrintWorker(Contact*);
 	Contact* head;
 	int size;
 };
